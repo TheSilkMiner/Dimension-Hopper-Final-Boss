@@ -12,6 +12,8 @@ public final class DimensionHopperTweaksLaunchPlugin extends AbstractLaunchPlugi
 
     public DimensionHopperTweaksLaunchPlugin() {
         super(PLUGIN_ID);
+        this.registerTransformer(new DimensionTypeLoggingTransformer(this, this.logger));
+        this.registerTransformer(new DimensionTypeTransformer(this, this.logger));
         this.registerTransformer(new ItemSwordInfinityTransformer(this, this.logger));
     }
 
