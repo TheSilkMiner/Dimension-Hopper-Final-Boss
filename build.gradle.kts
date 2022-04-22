@@ -7,13 +7,25 @@ import wtf.gofancy.fancygradle.script.extensions.deobf
 import java.time.format.DateTimeFormatter
 import java.time.Instant
 
+// TODO("Remove when ForgeGradle does this itself OR when IntelliJ fixes the -1 bug")
+buildscript {
+    configurations.classpath.configure {
+        resolutionStrategy {
+            force(
+                "org.apache.logging.log4j:log4j-api:2.11.2",
+                "org.apache.logging.log4j:log4j-core:2.11.2"
+            )
+        }
+    }
+}
+
 plugins {
     java
     eclipse
     idea
     `maven-publish`
-    id("net.minecraftforge.gradle") version "4.1.10"
-    id("wtf.gofancy.fancygradle") version "1.0.0"
+    id("net.minecraftforge.gradle") version "5.1.+"
+    id("wtf.gofancy.fancygradle") version "1.1.0-0"
 }
 
 version = "1.3.0"
@@ -30,7 +42,10 @@ minecraft {
 
 fancyGradle {
     patches {
-        patch(Patch.CODE_CHICKEN_LIB, Patch.RESOURCES, Patch.COREMODS, Patch.ASM)
+        asm
+        codeChickenLib
+        coremods
+        resources
     }
 }
 
@@ -92,7 +107,7 @@ tasks {
     }
 
     withType<Wrapper> {
-        gradleVersion = "6.8.3"
+        gradleVersion = "7.4.2"
         distributionType = Wrapper.DistributionType.ALL
     }
 }
